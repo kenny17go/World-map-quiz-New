@@ -1,4 +1,4 @@
-const CACHE_NAME = 'world-map-quiz-github-pages-v2';
+const CACHE_NAME = 'world-map-quiz-github-pages-v3';
 const APP_SHELL = [
   './',
   './index.html',
