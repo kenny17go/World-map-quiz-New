@@ -145,6 +145,12 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
 .empty-weak{text-align:center;color:#6d788c;padding:18px 6px}
 @media (orientation:landscape) and (max-height:500px){#progressBtn{font-size:13px;min-width:74px}.progress-card{max-height:88dvh;padding:13px}.progress-stats{margin:8px 0}.weak-row{padding:6px 4px}}
 
+
+/* ===== V2.3.1 progress button visibility fix ===== */
+.score-progress{min-height:30px!important;height:30px!important;min-width:auto!important;padding:0 8px!important;border:0!important;border-radius:8px!important;background:rgba(255,255,255,.14)!important;color:#fff!important;font-size:.74rem!important;font-weight:800!important;white-space:nowrap}
+.score-progress:hover{background:rgba(255,255,255,.22)!important}
+@media (orientation:landscape) and (max-height:500px){.score-progress{height:28px!important;min-height:28px!important;padding:0 6px!important}.score-progress span{display:none}}
+
 </style>
 </head>
 <body>
@@ -154,9 +160,9 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
   <div class="toolbar">
     <select id="mode"><option value="quiz">測驗模式</option><option value="weak">弱點複習</option><option value="study">學習模式</option></select>
     <select id="continent"><option value="all">全世界</option><option value="Asia">亞洲</option><option value="Europe">歐洲</option><option value="Africa">非洲</option><option value="North America">北美洲</option><option value="South America">南美洲</option><option value="Oceania">大洋洲</option></select>
-    <button class="primary" id="next">下一題</button><button class="answer" id="reveal">顯示答案</button><button id="progressBtn">學習進度</button><button id="resetScore">重置</button>
+    <button class="primary" id="next">下一題</button><button class="answer" id="reveal">顯示答案</button><button id="resetScore">重置</button>
   </div>
-  <div class="score"><span title="目前連續答對">🔥 <strong id="streak">0</strong></span><span title="最佳連續答對">🏆 <strong id="bestStreak">0</strong></span><span>答對 <strong id="correct">0</strong></span><span>完成 <strong id="total">0</strong></span><span>正確率 <strong id="rate">–</strong></span></div>
+  <div class="score"><button id="progressBtn" class="score-progress" title="開啟學習進度">📊 <span>進度</span></button><span title="目前連續答對">🔥 <strong id="streak">0</strong></span><span title="最佳連續答對">🏆 <strong id="bestStreak">0</strong></span><span>答對 <strong id="correct">0</strong></span><span>完成 <strong id="total">0</strong></span><span>正確率 <strong id="rate">–</strong></span></div>
 </header>
 <div class="map-wrap" id="mapWrap">
 <svg id="world" viewBox="0 0 1800 900" role="img" aria-label="互動式世界地圖">
