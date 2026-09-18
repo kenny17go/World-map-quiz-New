@@ -159,6 +159,11 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
  .progress-main:after{content:"📊";font-size:21px}
 }
 
+
+/* ===== V2.3.3 progress control moved into map layer ===== */
+.progress-map{position:absolute!important;z-index:60!important;right:max(12px,env(safe-area-inset-right));bottom:76px;width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;padding:0!important;border:0!important;border-radius:14px!important;background:#1769c2!important;color:#fff!important;box-shadow:0 8px 22px rgba(13,64,110,.28)!important;font-size:21px!important;display:grid!important;place-items:center!important}
+@media (orientation:landscape) and (max-height:500px){.progress-map{right:max(12px,env(safe-area-inset-right));bottom:76px}}
+
 </style>
 </head>
 <body>
@@ -168,11 +173,11 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
   <div class="toolbar">
     <select id="mode"><option value="quiz">測驗模式</option><option value="weak">弱點複習</option><option value="study">學習模式</option></select>
     <select id="continent"><option value="all">全世界</option><option value="Asia">亞洲</option><option value="Europe">歐洲</option><option value="Africa">非洲</option><option value="North America">北美洲</option><option value="South America">南美洲</option><option value="Oceania">大洋洲</option></select>
-    <button class="primary" id="next">下一題</button><button class="answer" id="reveal">顯示答案</button><button id="progressBtn" class="progress-main">📊 進度</button><button id="resetScore">重置</button>
+    <button class="primary" id="next">下一題</button><button class="answer" id="reveal">顯示答案</button><button id="resetScore">重置</button>
   </div>
   <div class="score"><span title="目前連續答對">🔥 <strong id="streak">0</strong></span><span title="最佳連續答對">🏆 <strong id="bestStreak">0</strong></span><span>答對 <strong id="correct">0</strong></span><span>完成 <strong id="total">0</strong></span><span>正確率 <strong id="rate">–</strong></span></div>
 </header>
-<div class="map-wrap" id="mapWrap">
+<div class="map-wrap" id="mapWrap"><button id="progressBtn" class="progress-map" aria-label="學習進度" title="學習進度">📊</button>
 <svg id="world" viewBox="0 0 1800 900" role="img" aria-label="互動式世界地圖">
 <g class="graticule">
 <line x1="0" y1="0" x2="0" y2="900"/><line x1="150" y1="0" x2="150" y2="900"/><line x1="300" y1="0" x2="300" y2="900"/><line x1="450" y1="0" x2="450" y2="900"/><line x1="600" y1="0" x2="600" y2="900"/><line x1="750" y1="0" x2="750" y2="900"/><line x1="900" y1="0" x2="900" y2="900"/><line x1="1050" y1="0" x2="1050" y2="900"/><line x1="1200" y1="0" x2="1200" y2="900"/><line x1="1350" y1="0" x2="1350" y2="900"/><line x1="1500" y1="0" x2="1500" y2="900"/><line x1="1650" y1="0" x2="1650" y2="900"/><line x1="1800" y1="0" x2="1800" y2="900"/>
