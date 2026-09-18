@@ -240,6 +240,39 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
   .feedback-capital{margin-top:2px}
 }
 
+
+/* ===== V2.5.3 iPhone safe-area + aligned feedback ===== */
+.country-feedback{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr)!important;
+  column-gap:6px!important;
+  row-gap:2px!important;
+  align-items:start!important;
+}
+.feedback-prefix{font-weight:850;white-space:nowrap}
+.feedback-country-main,.feedback-capital{display:block;min-width:0}
+.feedback-capital{margin-top:0!important;font-weight:750}
+#feedback.ok .feedback-prefix:not(.feedback-prefix-empty){font-size:1.05em;font-weight:900}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-right:max(96px,calc(env(safe-area-inset-right) + 72px))!important}
+  .zoom{right:max(92px,calc(env(safe-area-inset-right) + 68px))!important}
+  .badge{right:max(92px,calc(env(safe-area-inset-right) + 68px))!important}
+  .progress-map{right:max(92px,calc(env(safe-area-inset-right) + 68px))!important}
+  .bottom{
+    padding-right:max(96px,calc(env(safe-area-inset-right) + 72px))!important;
+    grid-template-columns:minmax(0,1fr) minmax(250px,31vw)!important
+  }
+  #feedback{
+    width:min(380px,31vw)!important;
+    max-width:31vw!important;
+    font-size:.74rem!important;
+    padding:7px 10px!important;
+    line-height:1.2!important
+  }
+  #feedback.ok,#feedback.info{max-width:31vw!important}
+  #feedback.ok .feedback-prefix:not(.feedback-prefix-empty){font-size:.88rem!important}
+}
+
 </style>
 </head>
 <body>
@@ -479,7 +512,7 @@ function refreshClasses(){paths.forEach(p=>{const c=DATA.get(p.dataset.iso);p.cl
 function nextQuestion(){completed=false;wrongIso=null;correctIso=null;pop.style.display='none';clearTimeout(wrongTimer);let p=pool();document.getElementById('next').disabled=mode==='study';document.getElementById('reveal').disabled=mode==='study';if(mode==='weak'&&!p.length){current=null;completed=true;document.getElementById('question').innerHTML='🎉 弱點複習完成<small>目前這個範圍沒有待複習的國家</small>';feedback('全部弱點都練習完成了！','ok');const nb=document.getElementById('next');nb.disabled=false;nb.textContent='回一般測驗';document.getElementById('reveal').disabled=true;refreshClasses();return}if(current&&p.some(c=>c.iso2!==current.iso2))p=p.filter(c=>c.iso2!==current.iso2);current=p[Math.floor(Math.random()*p.length)]||null;document.getElementById('feedback').textContent='';document.getElementById('feedback').className='';if(!current){document.getElementById('question').textContent='此範圍沒有可用國家資料';return}const n=current.names;document.getElementById('question').innerHTML=`請在地圖找出：<strong>${escapeHtml(n.zh)}</strong><small>${escapeHtml(n.en)}　/　${escapeHtml(n.ja)}</small>`;refreshClasses()}
 function updateScore(){document.getElementById('correct').textContent=correct;document.getElementById('total').textContent=total;document.getElementById('rate').textContent=total?Math.round(correct/total*100)+'%':'–';const s=document.getElementById('streak');if(s)s.textContent=streak;bestStreak=Math.max(bestStreak,streak);const bs=document.getElementById('bestStreak');if(bs)bs.textContent=bestStreak;try{localStorage.setItem('worldQuizScore',JSON.stringify({correct,total,streak,bestStreak,masteredWeak}))}catch(e){}}
 function feedback(t,cls=''){const el=document.getElementById('feedback');el.textContent=t;el.className=cls}
-function countryFeedback(prefix,c,cls='info'){const el=document.getElementById('feedback');el.className=cls;el.innerHTML=`<span class="feedback-country">${escapeHtml(prefix)} ${flagEmoji(c.iso2)} ${escapeHtml(c.names.zh)} <span class="feedback-en">(${escapeHtml(c.names.en)})</span></span><span class="feedback-capital">首都：${escapeHtml(capitalText(c.iso2))}</span>`}
+function countryFeedback(prefix,c,cls='info'){const el=document.getElementById('feedback');el.className=cls+' country-feedback';el.innerHTML=`<span class="feedback-prefix">${escapeHtml(prefix)}</span><span class="feedback-country-main">${flagEmoji(c.iso2)} ${escapeHtml(c.names.zh)} <span class="feedback-en">(${escapeHtml(c.names.en)})</span></span><span class="feedback-prefix feedback-prefix-empty"></span><span class="feedback-capital">首都：${escapeHtml(capitalText(c.iso2))}</span>`}
 function saveMistakes(){try{localStorage.setItem('worldQuizMistakes',JSON.stringify(mistakes))}catch(e){}}
 function loadMistakes(){try{const m=JSON.parse(localStorage.getItem('worldQuizMistakes')||'{}');if(m&&typeof m==='object')mistakes=m}catch(e){mistakes={}}}
 function renderProgress(){const entries=Object.entries(mistakes).filter(([,n])=>n>0).sort((a,b)=>b[1]-a[1]);const totalMistakes=entries.reduce((s,[,n])=>s+n,0);document.getElementById('progressSummary').innerHTML=`<div class="progress-stats"><div class="progress-stat"><strong>${entries.length}</strong><small>弱點國家</small></div><div class="progress-stat"><strong>${totalMistakes}</strong><small>累積錯誤</small></div><div class="progress-stat"><strong>${masteredWeak}</strong><small>已克服</small></div><div class="progress-stat"><strong>${bestStreak}</strong><small>最佳連續</small></div></div>`;const byCont={};entries.forEach(([iso])=>{const d=DATA.get(iso);if(d&&labels[d.continent])byCont[d.continent]=(byCont[d.continent]||0)+1});const cp=document.getElementById('continentProgress');const parts=Object.entries(byCont).sort((a,b)=>b[1]-a[1]);cp.className='continent-progress';cp.innerHTML=parts.map(([k,n])=>`<button class="continent-chip" data-continent="${escapeHtml(k)}" title="複習${escapeHtml(labels[k])}弱點">${escapeHtml(labels[k])} <b>${n}</b></button>`).join('');cp.querySelectorAll('.continent-chip').forEach(btn=>btn.onclick=()=>{document.getElementById('continent').value=btn.dataset.continent;document.getElementById('mode').value='weak';closeProgress();updateUI()});const start=document.getElementById('startWeakReview');start.disabled=!entries.length;const list=document.getElementById('weakList');if(!entries.length){cp.innerHTML='';list.innerHTML='<div class="empty-weak">目前沒有弱點紀錄 🎉</div>';return}list.innerHTML='<div class="weak-title">最需要複習 <small>點國家可直接練習</small></div>'+entries.slice(0,12).map(([iso,n])=>{const d=DATA.get(iso);return `<button class="weak-row weak-link" data-iso="${escapeHtml(iso)}"><div><b>${escapeHtml(d?.names.zh||iso.toUpperCase())}</b><small>　${escapeHtml(d?.names.en||'')}</small></div><span class="weak-count">錯 ${n}</span></button>`}).join('');list.querySelectorAll('.weak-link').forEach(btn=>btn.onclick=()=>startCountryWeakReview(btn.dataset.iso))}
