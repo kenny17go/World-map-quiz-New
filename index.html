@@ -273,6 +273,31 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
   #feedback.ok .feedback-prefix:not(.feedback-prefix-empty){font-size:.88rem!important}
 }
 
+
+/* ===== V2.5.4 fix root horizontal overflow; restore natural alignment ===== */
+html,body,.app{width:100%;max-width:100vw;overflow-x:hidden}
+header,.map-wrap,.bottom{width:100%;max-width:100vw;min-width:0}
+header>*{min-width:0}
+.toolbar{min-width:0}
+.score{flex:0 1 auto;min-width:0}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-right:max(14px,env(safe-area-inset-right))!important}
+  .brand{min-width:auto!important}
+  .toolbar{min-width:0!important;overflow:visible}
+  .score{flex-shrink:1!important}
+  .zoom{right:max(12px,env(safe-area-inset-right))!important}
+  .badge{right:max(12px,env(safe-area-inset-right))!important}
+  .progress-map{right:max(12px,env(safe-area-inset-right))!important}
+  .bottom{
+    padding-right:max(20px,env(safe-area-inset-right))!important;
+    grid-template-columns:minmax(0,1fr) minmax(250px,34vw)!important
+  }
+  #feedback{
+    width:min(410px,34vw)!important;
+    max-width:34vw!important
+  }
+}
+
 </style>
 </head>
 <body>
