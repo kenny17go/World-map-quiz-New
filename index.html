@@ -415,6 +415,6 @@ const standalone=window.matchMedia?.('(display-mode: standalone)').matches||wind
 loadMistakes();
 document.addEventListener('contextmenu',e=>{if(e.target.closest?.('#world'))e.preventDefault()});
 updateScore();updateUI();
-if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));}
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js?v=4').catch(()=>{}));}
 </script>
 </body></html>
