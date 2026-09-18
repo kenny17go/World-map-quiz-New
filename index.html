@@ -130,6 +130,11 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
  .bottom{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}
 }
 
+
+/* ===== V2.1 progress polish ===== */
+.score span{display:inline-flex;align-items:center;gap:3px}
+@media (orientation:landscape) and (max-height:500px){.score{gap:6px}.score span{font-size:.69rem}}
+
 </style>
 </head>
 <body>
@@ -141,7 +146,7 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
     <select id="continent"><option value="all">全世界</option><option value="Asia">亞洲</option><option value="Europe">歐洲</option><option value="Africa">非洲</option><option value="North America">北美洲</option><option value="South America">南美洲</option><option value="Oceania">大洋洲</option></select>
     <button class="primary" id="next">下一題</button><button class="answer" id="reveal">顯示答案</button><button id="resetScore">重置</button>
   </div>
-  <div class="score"><span>🔥 連續 <strong id="streak">0</strong></span><span>答對 <strong id="correct">0</strong></span><span>完成 <strong id="total">0</strong></span><span>正確率 <strong id="rate">–</strong></span></div>
+  <div class="score"><span title="目前連續答對">🔥 <strong id="streak">0</strong></span><span title="最佳連續答對">🏆 <strong id="bestStreak">0</strong></span><span>答對 <strong id="correct">0</strong></span><span>完成 <strong id="total">0</strong></span><span>正確率 <strong id="rate">–</strong></span></div>
 </header>
 <div class="map-wrap" id="mapWrap">
 <svg id="world" viewBox="0 0 1800 900" role="img" aria-label="互動式世界地圖">
@@ -361,7 +366,7 @@ function pool(){return COUNTRY_DATA.filter(c=>continent==='all'||c.continent===c
 function escapeHtml(s){return String(s).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]))}
 function refreshClasses(){paths.forEach(p=>{const c=DATA.get(p.dataset.iso);p.classList.toggle('hidden',continent!=='all'&&c?.continent!==continent);p.classList.toggle('study',mode==='study');p.classList.toggle('wrong',p.dataset.iso===wrongIso);p.classList.toggle('correct',p.dataset.iso===correctIso);p.classList.toggle('study-selected',mode==='study'&&p.dataset.iso===studyIso)})}
 function nextQuestion(){completed=false;wrongIso=null;correctIso=null;pop.style.display='none';clearTimeout(wrongTimer);let p=pool();if(current&&p.length>1)p=p.filter(c=>c.iso2!==current.iso2);current=p[Math.floor(Math.random()*p.length)]||null;document.getElementById('feedback').textContent='';document.getElementById('feedback').className='';if(!current){document.getElementById('question').textContent='此範圍沒有可用國家資料';return}const n=current.names;document.getElementById('question').innerHTML=`請在地圖找出：<strong>${escapeHtml(n.zh)}</strong><small>${escapeHtml(n.en)}　/　${escapeHtml(n.ja)}</small>`;refreshClasses()}
-function updateScore(){document.getElementById('correct').textContent=correct;document.getElementById('total').textContent=total;document.getElementById('rate').textContent=total?Math.round(correct/total*100)+'%':'–';const s=document.getElementById('streak');if(s)s.textContent=streak;bestStreak=Math.max(bestStreak,streak);try{localStorage.setItem('worldQuizScore',JSON.stringify({correct,total,streak,bestStreak}))}catch(e){}}
+function updateScore(){document.getElementById('correct').textContent=correct;document.getElementById('total').textContent=total;document.getElementById('rate').textContent=total?Math.round(correct/total*100)+'%':'–';const s=document.getElementById('streak');if(s)s.textContent=streak;bestStreak=Math.max(bestStreak,streak);const bs=document.getElementById('bestStreak');if(bs)bs.textContent=bestStreak;try{localStorage.setItem('worldQuizScore',JSON.stringify({correct,total,streak,bestStreak}))}catch(e){}}
 function feedback(t,cls=''){const el=document.getElementById('feedback');el.textContent=t;el.className=cls}
 function guess(iso){if(mode!=='quiz'||!current||completed)return;if(drag?.moved)return;if(iso===current.iso2){completed=true;correct++;total++;streak++;wrongIso=null;correctIso=iso;feedback(streak>=3?`🔥 連續答對 ${streak} 題！`:'✓ 答對了！','ok');updateScore();refreshClasses()}else{wrongIso=iso;correctIso=null;feedback('再想想看，答案沒有被揭露','no');refreshClasses();clearTimeout(wrongTimer);wrongTimer=setTimeout(()=>{if(!completed){wrongIso=null;refreshClasses()}},700)}}
 function reveal(){if(mode!=='quiz'||!current||completed)return;completed=true;total++;streak=0;wrongIso=null;correctIso=current.iso2;updateScore();refreshClasses();feedback(`答案：${current.names.zh}（${current.names.en}）`,'info')}
