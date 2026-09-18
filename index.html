@@ -106,6 +106,30 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
 }
 @media (prefers-reduced-motion:reduce){.country,.country.correct,.country.wrong,#feedback{animation:none!important;transition:none!important}}
 
+
+/* ===== V2.0 Phase 3: iPhone screenshot tuning ===== */
+@media (orientation:landscape) and (max-height:500px){
+ .app{grid-template-rows:auto 1fr auto}
+ header{min-height:50px}
+ .brand b{white-space:nowrap}
+ .map-wrap{min-height:0}
+ #world{height:100%;width:100%}
+ .bottom{min-height:62px;grid-template-columns:minmax(0,1fr) auto}
+ .prompt{justify-content:center}
+ #question{line-height:1.18}
+ #question small{margin-top:4px}
+ .zoom{top:16px;gap:7px}
+ .zoom button{background:rgba(255,255,255,.94)}
+ .badge{bottom:14px}
+}
+@media (orientation:landscape) and (min-width:900px) and (max-height:500px){
+ header{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+ .brand{min-width:245px}
+ .toolbar{flex:0 1 auto}
+ .score{margin-left:auto}
+ .bottom{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}
+}
+
 </style>
 </head>
 <body>
