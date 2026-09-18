@@ -11,8 +11,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="format-detection" content="telephone=no">
 <meta name="screen-orientation" content="landscape">
-<link rel="apple-touch-icon" href="icon-180.png">
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png?v=2.0.1">
+<link rel="manifest" href="manifest.webmanifest?v=2.0.1">
 
 <style>
 :root{--navy:#0b1930;--navy2:#123b62;--ocean:#cfe8f4;--land:#efd09a;--land2:#f8dea8;--border:#7e6849;--accent:#2d79ca;--correct:#19875b;--wrong:#cf4f4a;--text:#17233b;--muted:#6d788c;--line:#dce6ee;--shadow:0 14px 36px rgba(8,35,65,.17)}
@@ -95,6 +95,16 @@ header{background:linear-gradient(135deg,#071a33 0%,#0d3159 56%,#15558a 100%);pa
  .score{padding:4px 7px}.bottom{padding-top:6px;padding-bottom:max(6px,env(safe-area-inset-bottom))}
  .icon{width:34px;height:34px}.zoom button{width:42px;height:42px}
 }
+
+
+/* ===== V2.0 Phase 2 ===== */
+@media (orientation:landscape) and (max-height:500px){
+ .hint{background:rgba(255,255,255,.9);color:#435a70}
+ .bottom{min-height:50px}
+ #question small{opacity:.82}
+ #feedback:empty{display:none}
+}
+@media (prefers-reduced-motion:reduce){.country,.country.correct,.country.wrong,#feedback{animation:none!important;transition:none!important}}
 
 </style>
 </head>
