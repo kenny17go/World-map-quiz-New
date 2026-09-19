@@ -318,6 +318,23 @@ header>*{min-width:0}
 .flag-weak-link:hover{background:#f7fbfe!important}
 .flag-weak-link:active{background:#eef6fb!important}
 
+
+/* ===== V2.7 final viewport polish ===== */
+@media (orientation:landscape) and (max-height:500px){
+  .bottom{
+    padding-top:5px!important;
+    padding-bottom:max(5px,env(safe-area-inset-bottom))!important;
+    min-height:46px!important;
+    gap:8px!important;
+  }
+  .prompt{gap:9px!important}
+  .icon{width:36px!important;height:36px!important;border-radius:11px!important;font-size:17px!important}
+  #question{font-size:.96rem!important;line-height:1.12!important}
+  #question strong{font-size:1.08rem!important}
+  #question small{font-size:.69rem!important;margin-top:2px!important}
+  #feedback{padding-top:5px!important;padding-bottom:5px!important}
+}
+
 </style>
 </head>
 <body>
@@ -529,10 +546,10 @@ const CAPITALS={"af":"Kabul","ao":"Luanda","al":"Tirana","ae":"Abu Dhabi","ar":"
 const CAPITALS_ZH={"af":"喀布爾","ao":"魯安達","al":"地拉那","ae":"阿布達比","ar":"布宜諾斯艾利斯","am":"葉里溫","tf":"法蘭西港","au":"坎培拉","at":"維也納","az":"巴庫","bi":"吉特加","be":"布魯塞爾","bj":"波多諾伏","bf":"瓦加杜古","bd":"達卡","bg":"索菲亞","bs":"拿索","ba":"塞拉耶佛","by":"明斯克","bz":"貝爾墨潘","bo":"蘇克雷","br":"巴西利亞","bn":"斯里巴加灣市","bt":"廷布","bw":"嘉柏隆里","cf":"班基","ca":"渥太華","ch":"伯恩","cl":"聖地牙哥","cn":"北京","ci":"雅穆索戈","cm":"雅溫得","cd":"金夏沙","cg":"布拉薩市","co":"波哥大","cr":"聖荷西","cu":"哈瓦那","cy":"尼古西亞","cz":"布拉格","de":"柏林","dj":"吉布地","dk":"哥本哈根","do":"聖多明哥","dz":"阿爾及爾","ec":"基多","eg":"開羅","er":"阿斯馬拉","es":"馬德里","ee":"塔林","et":"阿迪斯阿貝巴","fi":"赫爾辛基","fj":"蘇瓦","fk":"史坦利","fr":"巴黎","ga":"自由市","gb":"倫敦","ge":"提比里斯","gh":"阿克拉","gn":"柯那克里","gm":"班竹","gw":"比索","gq":"馬拉博","gr":"雅典","gl":"努克","gt":"瓜地馬拉市","gy":"喬治敦","hn":"德古斯加巴","hr":"札格雷布","ht":"太子港","hu":"布達佩斯","id":"雅加達","in":"新德里","ie":"都柏林","ir":"德黑蘭","iq":"巴格達","is":"雷克雅維克","il":"耶路撒冷","it":"羅馬","jm":"京斯敦","jo":"安曼","jp":"東京","kz":"阿斯塔納","ke":"奈洛比","kg":"比什凱克","kh":"金邊","kr":"首爾","xk":"普里斯提納","kw":"科威特市","la":"永珍","lb":"貝魯特","lr":"蒙羅維亞","ly":"的黎波里","lk":"可倫坡","ls":"馬塞魯","lt":"維爾紐斯","lu":"盧森堡","lv":"里加","ma":"拉巴特","md":"基希訥烏","mg":"安塔那那利佛","mx":"墨西哥市","mk":"史高比耶","ml":"巴馬科","mm":"奈比多","me":"波德戈里察","mn":"烏蘭巴托","mz":"馬布多","mr":"諾克少","mw":"里朗威","my":"吉隆坡","na":"溫得和克","nc":"努美阿","ne":"尼阿美","ng":"阿布加","ni":"馬拿瓜","nl":"阿姆斯特丹","no":"奧斯陸","np":"加德滿都","nz":"威靈頓","om":"馬斯喀特","pk":"伊斯蘭馬巴德","pa":"巴拿馬市","pe":"利馬","ph":"馬尼拉","pg":"莫士比港","pl":"華沙","pr":"聖胡安","kp":"平壤","pt":"里斯本","py":"亞松森","ps":"拉姆安拉","qa":"杜哈","ro":"布加勒斯特","ru":"莫斯科","rw":"吉佳利","eh":"阿尤恩","sa":"利雅德","sd":"喀土穆","ss":"朱巴","sn":"達卡","sb":"荷尼阿拉","sl":"自由城","sv":"聖薩爾瓦多","so":"摩加迪休","rs":"貝爾格勒","sr":"巴拉馬利波","sk":"布拉提斯拉瓦","si":"盧布爾雅那","se":"斯德哥爾摩","sz":"洛班巴","sy":"大馬士革","td":"恩將納","tg":"洛美","th":"曼谷","tj":"杜尚別","tm":"阿什哈巴德","tl":"狄力","tt":"西班牙港","tn":"突尼斯","tr":"安卡拉","tw":"臺北","tz":"多多馬","ug":"坎帕拉","ua":"基輔","uy":"蒙特維多","us":"華盛頓特區","uz":"塔什干","ve":"卡拉卡斯","vn":"河內","vu":"維拉港","ye":"沙那","za":"普利托利亞","zm":"路沙卡","zw":"哈拉雷"};
 const paths=[...document.querySelectorAll('.country')];
 const labels={all:'全世界',Asia:'亞洲',Europe:'歐洲',Africa:'非洲','North America':'北美洲','South America':'南美洲',Oceania:'大洋洲'};
-const views={all:[0,0,1800,900],Asia:[860,70,900,600],Europe:[720,80,500,430],Africa:[720,235,620,600],'North America':[0,30,780,570],'South America':[390,420,510,470],Oceania:[1180,470,610,380]};
+const views={all:[75,-12,1650,825],Asia:[860,70,900,600],Europe:[720,80,500,430],Africa:[720,235,620,600],'North America':[0,30,780,570],'South America':[390,420,510,470],Oceania:[1180,470,610,380]};
 let mode='quiz', continent='all', current=null, completed=false, correct=0,total=0,streak=0,bestStreak=0,masteredWeak=0,mistakes={},flagMistakes={},wrongIso=null,correctIso=null,studyIso=null,wrongTimer=null;
 const svg=document.getElementById('world'), pop=document.getElementById('pop'), wrap=document.getElementById('mapWrap');
-let vb={x:0,y:0,w:1800,h:900}, drag=null, pinch=null;
+let vb={x:75,y:-12,w:1650,h:825}, drag=null, pinch=null;
 function applyView(){svg.setAttribute('viewBox',`${vb.x} ${vb.y} ${vb.w} ${vb.h}`)}
 function setView(arr){vb={x:arr[0],y:arr[1],w:arr[2],h:arr[3]};applyView()}
 function clampView(){vb.w=Math.max(180,Math.min(1800,vb.w));vb.h=vb.w/2;vb.x=Math.max(-80,Math.min(1880-vb.w,vb.x));vb.y=Math.max(-40,Math.min(940-vb.h,vb.y))}
